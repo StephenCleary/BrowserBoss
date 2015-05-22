@@ -101,21 +101,9 @@ namespace Nito.BrowserBoss
             yield return new FinderByValue();
             yield return new FinderByLabel();
             yield return new FinderByText();
-            yield return new FinderByCss();
         }
     }
-
-    /// <summary>
-    /// Finds elements by CSS selectors.
-    /// </summary>
-    public sealed class FinderByCss : IFinder
-    {
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
-        {
-            return context.FindElements(By.CssSelector(searchText));
-        }
-    }
-
+ 
     /// <summary>
     /// Finds elements by JQuery-style CSS selectors. This supports JQuery extensions to CSS selectors: https://api.jquery.com/category/selectors/jquery-selector-extensions/
     /// </summary>
