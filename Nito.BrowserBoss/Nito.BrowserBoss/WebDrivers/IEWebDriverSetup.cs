@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using System.Net;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
@@ -17,18 +11,18 @@ namespace Nito.BrowserBoss.WebDrivers
         {
         }
 
-        protected override async Task UpdateAsync(string version)
+        protected override void Update(string version)
         {
-            using (var client = new HttpClient())
-            using (var stream = await client.GetStreamAsync("http://selenium-release.storage.googleapis.com/" + version + "/IEDriverServer_Win32_" + version + ".0.zip").ConfigureAwait(false))
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead("http://selenium-release.storage.googleapis.com/" + version + "/IEDriverServer_Win32_" + version + ".0.zip"))
             using (var archive = new ZipArchive(stream))
                 archive.ExtractToDirectory(Path.Combine(ParentPath, version));
         }
 
-        protected override Task<string> AvailableVersionAsync()
+        protected override string AvailableVersion()
         {
             // TODO: better implementation
-            return Task.FromResult("2.45");
+            return "2.45";
         }
     }
 }

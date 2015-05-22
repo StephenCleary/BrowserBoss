@@ -36,15 +36,15 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the Chrome browser, updating the Chrome WebDriver if necessary.
         /// </summary>
-        public static async Task<Browser> StartChromeAsync()
+        public static Browser StartChrome()
         {
-            var path = await new WebDrivers.ChromeWebDriverSetup().InstallAsync().ConfigureAwait(false);
+            var path = new WebDrivers.ChromeWebDriverSetup().Install();
             return new Browser(new ChromeDriver(path));
         }
 
-        public static async Task<Browser> StartIEAsync()
+        public static Browser StartIE()
         {
-            var path = await new WebDrivers.IEWebDriverSetup().InstallAsync().ConfigureAwait(false);
+            var path = new WebDrivers.IEWebDriverSetup().Install();
             return new Browser(new InternetExplorerDriver(path));
         }
 

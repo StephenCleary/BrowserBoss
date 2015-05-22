@@ -39,18 +39,18 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the Chrome driver as <see cref="Browser"/>. Installs/updates the Chrome WebDriver as necessary.
         /// </summary>
-        public static async Task StartChromeAsync()
+        public static void StartChrome()
         {
-            _session = new Session(await Browser.StartChromeAsync().ConfigureAwait(false));
+            _session = new Session(Browser.StartChrome());
         }
 
         /// <summary>
         /// Starts the IE driver as <see cref="Browser"/>. Installs/updates the Internet Explorer WebDriver as necessary.
         /// </summary>
         /// <returns></returns>
-        public static async Task StartIEAsync()
+        public static void StartIE()
         {
-            _session = new Session(await Browser.StartIEAsync().ConfigureAwait(false));
+            _session = new Session(Browser.StartIE());
         }
 
         /// <summary>

@@ -9,6 +9,6 @@ namespace Nito.BrowserBoss.WebDrivers
 {
     public interface IWebDriverSetup
     {
-        Task<string> InstallAsync();
+        string Install();
     }
 }

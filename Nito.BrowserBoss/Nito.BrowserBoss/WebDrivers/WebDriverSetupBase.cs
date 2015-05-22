@@ -21,7 +21,7 @@ namespace Nito.BrowserBoss.WebDrivers
             get { return _parentPath; }
         }
 
-        public async Task<string> InstallAsync()
+        public string Install()
         {
             // Only check for driver updates every so often.
             if (LatestLocalVersionUpdate() > DateTimeOffset.UtcNow.Subtract(TimeSpan.FromDays(7)))
@@ -29,7 +29,7 @@ namespace Nito.BrowserBoss.WebDrivers
 
             // Get our installed version and compare it with the available version.
             var localVersion = LocalVersion();
-            var availableVersion = await AvailableVersionAsync().ConfigureAwait(false);
+            var availableVersion = AvailableVersion();
             if (localVersion == availableVersion)
             {
                 _localVersionFile.LastWriteTimeUtc = DateTime.UtcNow;
@@ -37,13 +37,13 @@ namespace Nito.BrowserBoss.WebDrivers
             }
 
             // Download the newer version and update our installed version to it.
-            await UpdateAsync(availableVersion).ConfigureAwait(false);
+            Update(availableVersion);
             File.WriteAllText(_localVersionFile.FullName, availableVersion);
             return Path.Combine(_parentPath, availableVersion);
         }
 
-        protected abstract Task<string> AvailableVersionAsync();
-        protected abstract Task UpdateAsync(string availableVersion);
+        protected abstract string AvailableVersion();
+        protected abstract void Update(string availableVersion);
 
         private string LocalVersion()
         {

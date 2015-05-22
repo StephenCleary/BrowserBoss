@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
@@ -17,18 +12,18 @@ namespace Nito.BrowserBoss.WebDrivers
         {
         }
 
-        protected override async Task UpdateAsync(string version)
+        protected override void Update(string version)
         {
-            using (var client = new HttpClient())
-            using (var stream = await client.GetStreamAsync("http://chromedriver.storage.googleapis.com/" + version + "/chromedriver_win32.zip").ConfigureAwait(false))
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead("http://chromedriver.storage.googleapis.com/" + version + "/chromedriver_win32.zip"))
             using (var archive = new ZipArchive(stream))
                 archive.ExtractToDirectory(Path.Combine(ParentPath, version));
         }
 
-        protected override async Task<string> AvailableVersionAsync()
+        protected override string AvailableVersion()
         {
-            using (var client = new HttpClient())
-                return await client.GetStringAsync("http://chromedriver.storage.googleapis.com/LATEST_RELEASE").ConfigureAwait(false);
+            using (var client = new WebClient())
+                return client.DownloadString("http://chromedriver.storage.googleapis.com/LATEST_RELEASE");
         }
     }
 }
