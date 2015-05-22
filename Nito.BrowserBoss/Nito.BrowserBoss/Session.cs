@@ -27,7 +27,7 @@ namespace Nito.BrowserBoss
             Browser = browser;
             Finders = FindExtensions.DefaultFinders().ToList();
             Timeout = TimeSpan.FromSeconds(30);
-            Logger = new NullLogger();
+            Logger = new ConsoleLogger();
         }
 
         /// <summary>
