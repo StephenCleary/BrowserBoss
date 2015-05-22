@@ -1,0 +1,2 @@
+# BrowserBoss
+Easily script browsers.
