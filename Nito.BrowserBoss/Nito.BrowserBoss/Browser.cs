@@ -10,6 +10,10 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class Browser
     {
+        /// <summary>
+        /// Creates a browser wrapper for the specified web driver.
+        /// </summary>
+        /// <param name="webDriver">The web driver to wrap.</param>
         public Browser(IWebDriver webDriver)
         {
             WebDriver = webDriver;
@@ -30,7 +34,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Starts the Chrome browser, updating the Chrome WebDriver if necessary.
+        /// Starts the Chrome browser, updating the web driver if necessary.
         /// </summary>
         public static Browser StartChrome()
         {
@@ -38,6 +42,9 @@ namespace Nito.BrowserBoss
             return new Browser(new ChromeDriver(path));
         }
 
+        /// <summary>
+        /// Starts the Internet Explorer browser, updating the web driver if necessary.
+        /// </summary>
         public static Browser StartInternetExplorer()
         {
             var path = new InternetExplorerWebDriverSetup().Install();

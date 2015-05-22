@@ -1,8 +1,11 @@
 ﻿namespace Nito.BrowserBoss.Loggers
 {
+    /// <summary>
+    /// A logger that ignores everything.
+    /// </summary>
     public sealed class NullLogger : ILogger
     {
-        public void WriteLine(string text)
+        void ILogger.WriteLine(string text)
         {
         }
     }

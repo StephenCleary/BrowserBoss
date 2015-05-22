@@ -105,7 +105,7 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class FindByJQueryCss : IFind
     {
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
+        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
             return context.FindElements(ByJQuery.CssSelector(searchText));
         }
@@ -116,7 +116,7 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class FindByXPath : IFind
     {
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
+        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
             return context.FindElements(By.XPath(searchText));
         }
@@ -127,7 +127,7 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class FindByText : IFind
     {
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
+        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
             return context.FindElements(By.XPath(".//*[text() = " + Utility.XPathString(searchText) + "]"));
         }
@@ -138,7 +138,7 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class FindByValue : IFind
     {
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
+        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
             return context.FindElements(By.CssSelector("*[value=" + Utility.CssString(searchText) + "]"));
         }
@@ -170,7 +170,7 @@ namespace Nito.BrowserBoss
             }
         }
 
-        public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
+        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
             return DoFind(context, searchText).ToArray();
         }

@@ -3,11 +3,18 @@ using System.IO;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
+    /// <summary>
+    /// Provides basic functionality for installing/updating web drivers.
+    /// </summary>
     public abstract class WebDriverSetupBase : IWebDriverSetup
     {
         private readonly string _parentPath;
         private readonly FileInfo _localVersionFile;
 
+        /// <summary>
+        /// Creates the local directory that contains all installations for this web driver.
+        /// </summary>
+        /// <param name="webDriverName">The name of the web driver.</param>
         protected WebDriverSetupBase(string webDriverName)
         {
             _parentPath = LocalDirectories.WebDriverPath(webDriverName);
@@ -15,11 +22,17 @@ namespace Nito.BrowserBoss.WebDrivers
             _localVersionFile = new FileInfo(Path.Combine(_parentPath, "version.txt"));
         }
 
+        /// <summary>
+        /// The path containing all installations for this web driver.
+        /// </summary>
         protected string ParentPath
         {
             get { return _parentPath; }
         }
 
+        /// <summary>
+        /// Installs/updates the web driver. Checks for updates weekly.
+        /// </summary>
         public string Install()
         {
             // Only check for driver updates every so often.
@@ -41,14 +54,28 @@ namespace Nito.BrowserBoss.WebDrivers
             return Path.Combine(_parentPath, availableVersion);
         }
 
+        /// <summary>
+        /// Returns the latest version available from the Internet.
+        /// </summary>
         protected abstract string AvailableVersion();
+
+        /// <summary>
+        /// Downloads and installs the <paramref name="availableVersion"/> into the directory <c>Path.Combine(ParentPath, availableVersion)</c>.
+        /// </summary>
+        /// <param name="availableVersion"></param>
         protected abstract void Update(string availableVersion);
 
+        /// <summary>
+        /// Gets the newest installed version, or <c>null</c> if there is no installed version.
+        /// </summary>
         private string LocalVersion()
         {
             return !_localVersionFile.Exists ? null : File.ReadAllText(_localVersionFile.FullName);
         }
 
+        /// <summary>
+        /// Gets the timestamp when the last version check was made, or <c>DateTimeOffset.MinValue</c> if no version check has been made yet.
+        /// </summary>
         private DateTimeOffset LatestLocalVersionUpdate()
         {
             return !_localVersionFile.Exists ? DateTimeOffset.MinValue : _localVersionFile.LastWriteTimeUtc;

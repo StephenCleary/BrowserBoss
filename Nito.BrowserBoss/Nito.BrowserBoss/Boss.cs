@@ -56,7 +56,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.Timeout"/> timeout expires.
+        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until <see cref="Config.Timeout"/> expires. Throws an exception if no matching elements could be found.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static IReadOnlyCollection<Element> FindElements(string searchText)
@@ -65,7 +65,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.Timeout"/> timeout expires.
+        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until <see cref="Config.Timeout"/> expires. Throws an exception if no matching elements could be found.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static Element Find(string searchText)
@@ -147,7 +147,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Configuration for the <see cref="Boss"/> class.
+        /// Configuration for the <see cref="Boss"/> class. These values are not valid until one of the <c>Start</c> methods is called.
         /// </summary>
         public static class Config
         {

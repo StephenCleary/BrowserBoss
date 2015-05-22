@@ -11,8 +11,16 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class Element
     {
+        /// <summary>
+        /// The parent session.
+        /// </summary>
         private readonly Session _session;
 
+        /// <summary>
+        /// Creates a new element wrapper.
+        /// </summary>
+        /// <param name="session">The parent session.</param>
+        /// <param name="webElement">The underlying web element.</param>
         public Element(Session session, IWebElement webElement)
         {
             WebElement = webElement;
@@ -145,6 +153,9 @@ namespace Nito.BrowserBoss
                 WebElement.Click();
         }
 
+        /// <summary>
+        /// Returns a human-readable interpretation of the element.
+        /// </summary>
         public override string ToString()
         {
             var id = WebElement.GetAttribute("id");

@@ -4,13 +4,23 @@ using System.Net;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
+    /// <summary>
+    /// Installs/updates the Chrome web driver.
+    /// </summary>
     public sealed class ChromeWebDriverSetup : WebDriverSetupBase
     {
+        /// <summary>
+        /// Creates an instance responsible for installing/updating the Chrome web driver.
+        /// </summary>
         public ChromeWebDriverSetup()
             : base("Chrome")
         {
         }
 
+        /// <summary>
+        /// Downloads the specified web driver version.
+        /// </summary>
+        /// <param name="version">The version to download.</param>
         protected override void Update(string version)
         {
             using (var client = new WebClient())
@@ -19,6 +29,9 @@ namespace Nito.BrowserBoss.WebDrivers
                 archive.ExtractToDirectory(Path.Combine(ParentPath, version));
         }
 
+        /// <summary>
+        /// Returns the newest version available for download. Currently always returns "2.45".
+        /// </summary>
         protected override string AvailableVersion()
         {
             using (var client = new WebClient())

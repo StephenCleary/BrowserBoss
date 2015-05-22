@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Nito.BrowserBoss
 {
+    /// <summary>
+    /// Utility methods for sequences.
+    /// </summary>
     public static class EnumerableExtensions
     {
         /// <summary>

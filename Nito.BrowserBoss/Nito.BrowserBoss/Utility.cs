@@ -2,6 +2,9 @@
 
 namespace Nito.BrowserBoss
 {
+    /// <summary>
+    /// String utility methods.
+    /// </summary>
     public static class Utility
     {
         /// <summary>

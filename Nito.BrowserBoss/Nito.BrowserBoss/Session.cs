@@ -14,6 +14,9 @@ namespace Nito.BrowserBoss
     /// </summary>
     public class Session
     {
+        /// <summary>
+        /// The current logger.
+        /// </summary>
         private ILogger _logger;
 
         /// <summary>
