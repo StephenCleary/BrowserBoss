@@ -163,8 +163,8 @@ namespace Nito.BrowserBoss
                 return "#" + id;
             var text = WebElement.Text;
             if (!string.IsNullOrEmpty(text))
-                return text;
-            return WebElement.TagName;
+                return "\"" + text + "\"";
+            return "<" + WebElement.TagName + ">";
         }
     }
 }
