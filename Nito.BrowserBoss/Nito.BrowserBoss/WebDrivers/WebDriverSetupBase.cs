@@ -41,7 +41,17 @@ namespace Nito.BrowserBoss.WebDrivers
 
             // Get our installed version and compare it with the available version.
             var localVersion = LocalVersion();
-            var availableVersion = AvailableVersion();
+            string availableVersion;
+            try
+            {
+                availableVersion = AvailableVersion();
+            }
+            catch
+            {
+                if (localVersion == null)
+                    throw;
+                return Path.Combine(_parentPath, localVersion);
+            }
             if (localVersion == availableVersion)
             {
                 _localVersionFile.LastWriteTimeUtc = DateTime.UtcNow;
