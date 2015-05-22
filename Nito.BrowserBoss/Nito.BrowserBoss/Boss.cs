@@ -180,7 +180,7 @@ namespace Nito.BrowserBoss
             /// <summary>
             /// The collection of finders used to evaluate search strings.
             /// </summary>
-            public static List<IFinder> Finders { get { return _session.Finders; } }
+            public static List<IFind> Finders { get { return _session.Finders; } }
         }
     }
 }

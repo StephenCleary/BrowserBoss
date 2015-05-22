@@ -12,7 +12,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// A "finder" is an object that knows how to search for matching elements given a search string.
     /// </summary>
-    public interface IFinder
+    public interface IFind
     {
         /// <summary>
         /// Finds all matching elements. May throw exceptions on error.
@@ -25,7 +25,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// Extension methods for finders.
     /// </summary>
-    public static class FinderExtensions
+    public static class FindExtensions
     {
         /// <summary>
         /// Finds all matching elements. Does not throw exceptions; an empty enumeration is returned if any errors occur.
@@ -33,7 +33,7 @@ namespace Nito.BrowserBoss
         /// <param name="this">The finder.</param>
         /// <param name="context">The context of the search. All results should be within this context.</param>
         /// <param name="searchText">The search string used to match the elements.</param>
-        public static IReadOnlyCollection<IWebElement> TryFind(this IFinder @this, ISearchContext context, string searchText)
+        public static IReadOnlyCollection<IWebElement> TryFind(this IFind @this, ISearchContext context, string searchText)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Nito.BrowserBoss
         /// <param name="this">The finders.</param>
         /// <param name="context">The context of the search. All results should be within this context.</param>
         /// <param name="searchText">The search string used to match the elements.</param>
-        public static IReadOnlyCollection<IWebElement> TryFind(this IEnumerable<IFinder> @this, ISearchContext context, string searchText)
+        public static IReadOnlyCollection<IWebElement> TryFind(this IEnumerable<IFind> @this, ISearchContext context, string searchText)
         {
             foreach (var finder in @this)
             {
@@ -70,7 +70,7 @@ namespace Nito.BrowserBoss
         /// <param name="webDriver">The web driver, representing the top-level context of this search.</param>
         /// <param name="context">The context of the search. All results should be within this context.</param>
         /// <param name="searchText">The search string used to match the elements.</param>
-        public static IReadOnlyCollection<IWebElement> TryFind(this IReadOnlyCollection<IFinder> @this, IWebDriver webDriver, ISearchContext context, string searchText)
+        public static IReadOnlyCollection<IWebElement> TryFind(this IReadOnlyCollection<IFind> @this, IWebDriver webDriver, ISearchContext context, string searchText)
         {
             // First, return all the normal matches.
             webDriver.SwitchTo().DefaultContent();
@@ -94,20 +94,20 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// The default finders used by BrowserBoss.
         /// </summary>
-        public static IEnumerable<IFinder> DefaultFinders()
+        public static IEnumerable<IFind> DefaultFinders()
         {
-            yield return new FinderByJQueryCss();
-            yield return new FinderByXPath();
-            yield return new FinderByValue();
-            yield return new FinderByLabel();
-            yield return new FinderByText();
+            yield return new FindByJQueryCss();
+            yield return new FindByXPath();
+            yield return new FindByValue();
+            yield return new FindByLabel();
+            yield return new FindByText();
         }
     }
  
     /// <summary>
     /// Finds elements by JQuery-style CSS selectors. This supports JQuery extensions to CSS selectors: https://api.jquery.com/category/selectors/jquery-selector-extensions/
     /// </summary>
-    public sealed class FinderByJQueryCss : IFinder
+    public sealed class FindByJQueryCss : IFind
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
@@ -118,7 +118,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// Finds elements by XPath strings.
     /// </summary>
-    public sealed class FinderByXPath : IFinder
+    public sealed class FindByXPath : IFind
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
@@ -129,7 +129,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// Finds elements by their text value.
     /// </summary>
-    public sealed class FinderByText : IFinder
+    public sealed class FindByText : IFind
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
@@ -140,7 +140,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// Finds elements by their value.
     /// </summary>
-    public sealed class FinderByValue : IFinder
+    public sealed class FindByValue : IFind
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
@@ -151,7 +151,7 @@ namespace Nito.BrowserBoss
     /// <summary>
     /// Finds elements by a matching label. The search string is the label text, and the returned element is the form element that label is for.
     /// </summary>
-    public sealed class FinderByLabel : IFinder
+    public sealed class FindByLabel : IFind
     {
         private static IEnumerable<IWebElement> DoFind(ISearchContext context, string searchText)
         {

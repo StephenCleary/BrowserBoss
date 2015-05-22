@@ -21,7 +21,7 @@ namespace Nito.BrowserBoss
         public Session(Browser browser)
         {
             Browser = browser;
-            Finders = FinderExtensions.DefaultFinders().ToList();
+            Finders = FindExtensions.DefaultFinders().ToList();
             Timeout = TimeSpan.FromSeconds(30);
             Logger = new NullLogger();
         }
@@ -48,7 +48,7 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// The collection of finders used to evaluate search strings.
         /// </summary>
-        public List<IFinder> Finders { get; private set; }
+        public List<IFind> Finders { get; private set; }
 
         /// <summary>
         /// Repeatedly executes <paramref name="func"/> until it returns <c>true</c> or until <see cref="Timeout"/> expires.
