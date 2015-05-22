@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Session.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="Element.cs" />
