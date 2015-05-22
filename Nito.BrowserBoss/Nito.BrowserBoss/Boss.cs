@@ -48,9 +48,9 @@ namespace Nito.BrowserBoss
         /// Starts the IE driver as <see cref="Browser"/>. Installs/updates the Internet Explorer WebDriver as necessary.
         /// </summary>
         /// <returns></returns>
-        public static void StartIE()
+        public static void StartInternetExplorer()
         {
-            _session = new Session(Browser.StartIE());
+            _session = new Session(Browser.StartInternetExplorer());
         }
 
         /// <summary>

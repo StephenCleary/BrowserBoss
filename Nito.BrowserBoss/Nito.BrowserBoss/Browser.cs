@@ -42,9 +42,9 @@ namespace Nito.BrowserBoss
             return new Browser(new ChromeDriver(path));
         }
 
-        public static Browser StartIE()
+        public static Browser StartInternetExplorer()
         {
-            var path = new WebDrivers.IEWebDriverSetup().Install();
+            var path = new WebDrivers.InternetExplorerWebDriverSetup().Install();
             return new Browser(new InternetExplorerDriver(path));
         }
 

@@ -4,9 +4,9 @@ using System.Net;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
-    public sealed class IEWebDriverSetup : WebDriverSetupBase
+    public sealed class InternetExplorerWebDriverSetup : WebDriverSetupBase
     {
-        public IEWebDriverSetup()
+        public InternetExplorerWebDriverSetup()
             : base("IE")
         {
         }
