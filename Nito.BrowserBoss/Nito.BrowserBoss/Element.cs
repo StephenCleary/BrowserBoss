@@ -153,6 +153,8 @@ namespace Nito.BrowserBoss
                 WebElement.Click();
         }
 
+        // TODO: drag/drop, other interactions?
+
         /// <summary>
         /// Returns a human-readable interpretation of the element.
         /// </summary>
