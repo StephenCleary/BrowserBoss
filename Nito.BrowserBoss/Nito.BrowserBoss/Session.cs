@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         /// <typeparam name="T">The type of elements in the collection returned by <paramref name="func"/>.</typeparam>
         /// <param name="func">The function to execute.</param>
-        public T Retry<T>(Func<T> func) where T : System.Collections.ICollection
+        public T Retry<T>(Func<T> func) where T : ICollection
         {
             var wait = new WebDriverWait(Browser.WebDriver, Timeout);
             var result = default(T);

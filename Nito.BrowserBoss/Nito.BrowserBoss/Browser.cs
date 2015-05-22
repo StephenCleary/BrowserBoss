@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Nito.BrowserBoss.WebDrivers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
@@ -38,13 +34,13 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static Browser StartChrome()
         {
-            var path = new WebDrivers.ChromeWebDriverSetup().Install();
+            var path = new ChromeWebDriverSetup().Install();
             return new Browser(new ChromeDriver(path));
         }
 
         public static Browser StartInternetExplorer()
         {
-            var path = new WebDrivers.InternetExplorerWebDriverSetup().Install();
+            var path = new InternetExplorerWebDriverSetup().Install();
             return new Browser(new InternetExplorerDriver(path));
         }
 
