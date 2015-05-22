@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nito.BrowserBoss.Finders;
 using Nito.BrowserBoss.Loggers;
 
 namespace Nito.BrowserBoss

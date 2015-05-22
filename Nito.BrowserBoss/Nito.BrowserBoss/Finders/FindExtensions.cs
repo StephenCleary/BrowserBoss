@@ -1,23 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using OpenQA.Selenium;
-using SizSelCsZzz;
 
-namespace Nito.BrowserBoss
+namespace Nito.BrowserBoss.Finders
 {
-    /// <summary>
-    /// A "finder" is an object that knows how to search for matching elements given a search string.
-    /// </summary>
-    public interface IFind
-    {
-        /// <summary>
-        /// Finds all matching elements. May throw exceptions on error.
-        /// </summary>
-        /// <param name="context">The context of the search. All results should be within this context.</param>
-        /// <param name="searchText">The search string used to match the elements.</param>
-        IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText);
-    }
-
     /// <summary>
     /// Extension methods for finders.
     /// </summary>
@@ -97,82 +82,6 @@ namespace Nito.BrowserBoss
             yield return new FindByValue();
             yield return new FindByLabel();
             yield return new FindByText();
-        }
-    }
- 
-    /// <summary>
-    /// Finds elements by JQuery-style CSS selectors. This supports JQuery extensions to CSS selectors: https://api.jquery.com/category/selectors/jquery-selector-extensions/
-    /// </summary>
-    public sealed class FindByJQueryCss : IFind
-    {
-        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
-        {
-            return context.FindElements(ByJQuery.CssSelector(searchText));
-        }
-    }
-
-    /// <summary>
-    /// Finds elements by XPath strings.
-    /// </summary>
-    public sealed class FindByXPath : IFind
-    {
-        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
-        {
-            return context.FindElements(By.XPath(searchText));
-        }
-    }
-
-    /// <summary>
-    /// Finds elements by their text value.
-    /// </summary>
-    public sealed class FindByText : IFind
-    {
-        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
-        {
-            return context.FindElements(By.XPath(".//*[text() = " + Utility.XPathString(searchText) + "]"));
-        }
-    }
-
-    /// <summary>
-    /// Finds elements by their value.
-    /// </summary>
-    public sealed class FindByValue : IFind
-    {
-        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
-        {
-            return context.FindElements(By.CssSelector("*[value=" + Utility.CssString(searchText) + "]"));
-        }
-    }
-
-    /// <summary>
-    /// Finds elements by a matching label. The search string is the label text, and the returned element is the form element that label is for.
-    /// </summary>
-    public sealed class FindByLabel : IFind
-    {
-        private static IEnumerable<IWebElement> DoFind(ISearchContext context, string searchText)
-        {
-            foreach (var label in context.FindElements(By.XPath(".//label[text() = " + Utility.XPathString(searchText) + "]")))
-            {
-                var forAttribute = label.GetAttribute("for");
-                if (forAttribute != null)
-                {
-                    foreach (var e in context.FindElements(By.Id(forAttribute)))
-                        yield return e;
-                }
-                else
-                {
-                    foreach (var e in label.FindElements(By.XPath("./following-sibling::*[1]")))
-                    {
-                        if (e.TagName == "select" || e.TagName == "textarea" || (e.TagName == "input" && e.GetAttribute("type") != "hidden"))
-                            yield return e;
-                    }
-                }
-            }
-        }
-
-        IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
-        {
-            return DoFind(context, searchText).ToArray();
         }
     }
 }

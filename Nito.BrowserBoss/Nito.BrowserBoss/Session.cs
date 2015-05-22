@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Nito.BrowserBoss.Finders;
 using Nito.BrowserBoss.Loggers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;

@@ -59,12 +59,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Finders\FindByJQueryCss.cs" />
+    <Compile Include="Finders\FindByLabel.cs" />
+    <Compile Include="Finders\FindByText.cs" />
+    <Compile Include="Finders\FindByValue.cs" />
+    <Compile Include="Finders\FindByXPath.cs" />
+    <Compile Include="Finders\FindExtensions.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="Finders.cs" />
+    <Compile Include="Finders\IFind.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Loggers\NullLogger.cs" />
