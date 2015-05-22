@@ -13,7 +13,7 @@ namespace Nito.BrowserBoss
         /// Surrounds the string value with single or double quotes, returning an expression if necessary.
         /// </summary>
         /// <param name="value">The string value.</param>
-        public static string XPathLiteralString(string value)
+        public static string XPathString(string value)
         {
             // Quickly handle the common cases.
             if (!value.Contains("'"))
@@ -61,7 +61,7 @@ namespace Nito.BrowserBoss
         /// Escapes the string value as necessary and surrounds it with single or double quotes.
         /// </summary>
         /// <param name="value">The string value.</param>
-        public static string CssLiteralString(string value)
+        public static string CssString(string value)
         {
             if (!value.Contains("\\"))
             {

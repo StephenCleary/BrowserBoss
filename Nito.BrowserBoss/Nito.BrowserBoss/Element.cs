@@ -13,9 +13,12 @@ namespace Nito.BrowserBoss
     /// </summary>
     public sealed class Element
     {
-        public Element(IWebElement webElement)
+        private readonly Session _session;
+
+        public Element(Session session, IWebElement webElement)
         {
             WebElement = webElement;
+            _session = session;
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The text to search.</param>
         public IEnumerable<Element> FindElements(string searchText)
         {
-            return Boss.FindElements(WebElement, searchText);
+            return _session.FindElements(WebElement, searchText);
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The text to search.</param>
         public Element Find(string searchText)
         {
-            return Boss.FindElement(WebElement, searchText);
+            return _session.FindElement(WebElement, searchText);
         }
 
         /// <summary>
@@ -80,7 +83,7 @@ namespace Nito.BrowserBoss
         /// <param name="text">The text to send.</param>
         public void Write(string text)
         {
-            Boss.Logger.WriteLine("Writing " + text + " to " + this);
+            _session.Logger.WriteLine("Writing " + text + " to " + this);
             if (WebElement.TagName != "select")
             {
                 Clear();
@@ -88,7 +91,7 @@ namespace Nito.BrowserBoss
                 return;
             }
 
-            var option = Boss.FindElements(WebElement, "option[text()=" + Utility.CssLiteralString(text) + "] | option[@value=" + Utility.CssLiteralString(text) + "]").FirstOrDefault();
+            var option = _session.FindElements(WebElement, "option[text()=" + Utility.CssString(text) + "] | option[@value=" + Utility.CssString(text) + "]").FirstOrDefault();
             if (option == null)
                 throw new InvalidDataException("Element " + this + " does not contain option " + text);
             option.WebElement.Click();
@@ -99,7 +102,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public void Clear()
         {
-            Boss.Logger.WriteLine("Clearing " + this);
+            _session.Logger.WriteLine("Clearing " + this);
             if (WebElement.GetAttribute("readonly") == "true")
                 throw new InvalidOperationException("Cannot clear a readonly element.");
             WebElement.Clear();
@@ -110,7 +113,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public void Click()
         {
-            Boss.Logger.WriteLine("Clicking " + this);
+            _session.Logger.WriteLine("Clicking " + this);
             WebElement.Click();
         }
 
@@ -119,9 +122,9 @@ namespace Nito.BrowserBoss
         /// </summary>
         public void DoubleClick()
         {
-            Boss.Logger.WriteLine("Doubleclicking " + this);
+            _session.Logger.WriteLine("Doubleclicking " + this);
             var js = "var evt = document.createEvent('MouseEvents'); evt.initMouseEvent('dblclick',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0,null); arguments[0].dispatchEvent(evt);";
-            Boss.Script(js, WebElement);
+            _session.Browser.Script(js, WebElement);
         }
 
         /// <summary>
@@ -129,7 +132,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public void Check()
         {
-            Boss.Logger.WriteLine("Checking " + this);
+            _session.Logger.WriteLine("Checking " + this);
             if (!WebElement.Selected)
                 WebElement.Click();
         }
@@ -139,7 +142,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public void Uncheck()
         {
-            Boss.Logger.WriteLine("Unhecking " + this);
+            _session.Logger.WriteLine("Unhecking " + this);
             if (!WebElement.Selected)
                 WebElement.Click();
         }

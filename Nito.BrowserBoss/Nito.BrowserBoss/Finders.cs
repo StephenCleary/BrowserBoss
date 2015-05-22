@@ -133,7 +133,7 @@ namespace Nito.BrowserBoss
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
-            return context.FindElements(By.XPath(".//*[text() = " + Utility.XPathLiteralString(searchText) + "]"));
+            return context.FindElements(By.XPath(".//*[text() = " + Utility.XPathString(searchText) + "]"));
         }
     }
 
@@ -144,7 +144,7 @@ namespace Nito.BrowserBoss
     {
         public IReadOnlyCollection<IWebElement> Find(ISearchContext context, string searchText)
         {
-            return context.FindElements(By.CssSelector("*[value=" + Utility.CssLiteralString(searchText) + "]"));
+            return context.FindElements(By.CssSelector("*[value=" + Utility.CssString(searchText) + "]"));
         }
     }
 
@@ -155,7 +155,7 @@ namespace Nito.BrowserBoss
     {
         private static IEnumerable<IWebElement> DoFind(ISearchContext context, string searchText)
         {
-            foreach (var label in context.FindElements(By.XPath(".//label[text() = " + Utility.XPathLiteralString(searchText) + "]")))
+            foreach (var label in context.FindElements(By.XPath(".//label[text() = " + Utility.XPathString(searchText) + "]")))
             {
                 var forAttribute = label.GetAttribute("for");
                 if (forAttribute != null)

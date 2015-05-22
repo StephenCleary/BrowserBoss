@@ -12,19 +12,20 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Nito.BrowserBoss
 {
+    /// <summary>
+    /// Provides a single session to control the browser. Begin by calling one of the <c>Start</c> methods.
+    /// </summary>
     public static class Boss
     {
-        static Boss()
-        {
-            Logger = new NullLogger();
-        }
-
-        public static ILogger Logger { get; set; }
+        /// <summary>
+        /// The current global session. This is <c>null</c> until one of the <c>Start</c> methods is called.
+        /// </summary>
+        private static Session _session;
 
         /// <summary>
         /// The current browser.
         /// </summary>
-        public static Browser Browser { get; set; }
+        public static Browser Browser { get { return _session.Browser; } }
 
         /// <summary>
         /// Gets the current URL or navigates to a new URL.
@@ -40,7 +41,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static async Task StartChromeAsync()
         {
-            Browser = await Browser.StartChromeAsync().ConfigureAwait(false);
+            _session = new Session(await Browser.StartChromeAsync().ConfigureAwait(false));
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Nito.BrowserBoss
         /// <returns></returns>
         public static async Task StartIEAsync()
         {
-            Browser = await Browser.StartIEAsync().ConfigureAwait(false);
+            _session = new Session(await Browser.StartIEAsync().ConfigureAwait(false));
         }
 
         /// <summary>
@@ -62,87 +63,22 @@ namespace Nito.BrowserBoss
             return Browser.Script(script, args);
         }
 
-        internal static void Retry(Func<bool> func)
-        {
-            var wait = new WebDriverWait(Browser.WebDriver, Config.ElementTimeout);
-            wait.Until(_ =>
-            {
-                try
-                {
-                    return func();
-                }
-                catch
-                {
-                    return false;
-                }
-            });
-        }
-
-        internal static T Retry<T>(Func<T> func) where T : System.Collections.ICollection
-        {
-            var wait = new WebDriverWait(Browser.WebDriver, Config.ElementTimeout);
-            var result = default(T);
-            wait.Until(_ =>
-            {
-                try
-                {
-                    result = func();
-                    return result.Count != 0;
-                }
-                catch
-                {
-                    return false;
-                }
-            });
-            return result;
-        }
-
         /// <summary>
-        /// Repeatedly attempts to find the elements until the <see cref="Config.ElementTimeout"/> timeout expires. Throws an exception if no matching elements could be found.
-        /// </summary>
-        /// <param name="context">The context in which to search.</param>
-        /// <param name="searchText">The search string.</param>
-        internal static IReadOnlyCollection<Element> FindElements(ISearchContext context, string searchText)
-        {
-            try
-            {
-                return Retry(() => Config.Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(x)).ToArray());
-            }
-            catch (WebDriverTimeoutException ex)
-            {
-                throw new InvalidDataException("Could not find elements matching " + searchText, ex);
-            }
-        }
-
-        /// <summary>
-        /// Repeatedly attempts to find exactly one element until the <see cref="Config.ElementTimeout"/> timeout expires. Throws an exception if no matching element could be found.
-        /// </summary>
-        /// <param name="context">The context in which to search.</param>
-        /// <param name="searchText">The search string.</param>
-        internal static Element FindElement(ISearchContext context, string searchText)
-        {
-            var result = FindElements(context, searchText);
-            if (result.Count != 1)
-                throw new InvalidDataException("Multiple elements match " + searchText);
-            return result.First();
-        }
-
-        /// <summary>
-        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.ElementTimeout"/> timeout expires.
+        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.Timeout"/> timeout expires.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static IReadOnlyCollection<Element> FindElements(string searchText)
         {
-            return FindElements(Browser.WebDriver, searchText);
+            return _session.FindElements(searchText);
         }
 
         /// <summary>
-        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.ElementTimeout"/> timeout expires.
+        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until the <see cref="Config.Timeout"/> timeout expires.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static Element Find(string searchText)
         {
-            return FindElement(Browser.WebDriver, searchText);
+            return _session.Find(searchText);
         }
 
         /// <summary>
@@ -152,7 +88,7 @@ namespace Nito.BrowserBoss
         /// <param name="text">The text to send.</param>
         public static void Write(string searchText, string text)
         {
-            FindElements(searchText).Apply(x => x.Write(text));
+            _session.Write(searchText, text);
         }
 
         /// <summary>
@@ -161,7 +97,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Clear(string searchText)
         {
-            FindElements(searchText).Apply(x => x.Clear());
+            _session.Clear(searchText);
         }
 
         /// <summary>
@@ -170,7 +106,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Click(string searchText)
         {
-            FindElements(searchText).Apply(x => x.Click());
+            _session.Click(searchText);
         }
 
         /// <summary>
@@ -179,7 +115,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void DoubleClick(string searchText)
         {
-            FindElements(searchText).Apply(x => x.DoubleClick());
+            _session.DoubleClick(searchText);
         }
 
         /// <summary>
@@ -188,7 +124,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Check(string searchText)
         {
-            FindElements(searchText).Apply(x => x.Check());
+            _session.Check(searchText);
         }
 
         /// <summary>
@@ -197,7 +133,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Uncheck(string searchText)
         {
-            FindElements(searchText).Apply(x => x.Uncheck());
+            _session.Uncheck(searchText);
         }
 
         /// <summary>
@@ -206,7 +142,7 @@ namespace Nito.BrowserBoss
         /// <param name="value">The string value to embed in an XPath search text.</param>
         public static string XPathString(string value)
         {
-            return Utility.XPathLiteralString(value);
+            return Utility.XPathString(value);
         }
 
         /// <summary>
@@ -215,7 +151,7 @@ namespace Nito.BrowserBoss
         /// <param name="value">The string value to embed in a CSS search text.</param>
         public static string CssString(string value)
         {
-            return Utility.CssLiteralString(value);
+            return Utility.CssString(value);
         }
 
         /// <summary>
@@ -223,21 +159,28 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static class Config
         {
-            static Config()
+            /// <summary>
+            /// Gets or sets the current logger.
+            /// </summary>
+            public static ILogger Logger
             {
-                Finders = FinderExtensions.DefaultFinders().ToList();
-                ElementTimeout = TimeSpan.FromSeconds(30);
+                get { return _session.Logger; }
+                set { _session.Logger = value; }
             }
 
             /// <summary>
             /// The amount of time to wait for browser elements to appear. The default is 30 seconds.
             /// </summary>
-            public static TimeSpan ElementTimeout { get; set; }
+            public static TimeSpan Timeout
+            {
+                get { return _session.Timeout; }
+                set { _session.Timeout = value; }
+            }
 
             /// <summary>
             /// The collection of finders used to evaluate search strings.
             /// </summary>
-            public static List<IFinder> Finders { get; private set; }
+            public static List<IFinder> Finders { get { return _session.Finders; } }
         }
     }
 }

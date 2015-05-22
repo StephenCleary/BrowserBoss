@@ -13,6 +13,8 @@ namespace Nito.BrowserBoss
     /// </summary>
     public class Session
     {
+        private ILogger _logger;
+
         /// <summary>
         /// Creates a session around the specified browser.
         /// </summary>
@@ -35,33 +37,18 @@ namespace Nito.BrowserBoss
         public TimeSpan Timeout { get; set; }
 
         /// <summary>
-        /// The current logger, which can help with debugging. This should never be set to <c>null</c>.
+        /// The current logger, which can help with debugging.
         /// </summary>
-        public ILogger Logger { get; set; }
+        public ILogger Logger
+        {
+            get { return _logger; }
+            set { _logger = value ?? new NullLogger(); }
+        }
 
         /// <summary>
         /// The collection of finders used to evaluate search strings.
         /// </summary>
-        public static List<IFinder> Finders { get; private set; }
-
-        /// <summary>
-        /// Gets the current URL or navigates to a new URL.
-        /// </summary>
-        public string Url
-        {
-            get { return Browser.Url; }
-            set { Browser.Url = value; }
-        }
-
-        /// <summary>
-        /// Executes JavaScript in <see cref="Browser"/>.
-        /// </summary>
-        /// <param name="script">The JavaScript to execute.</param>
-        /// <param name="args">The arguments to pass to <paramref name="script"/>.</param>
-        public dynamic Script(string script, params object[] args)
-        {
-            return Browser.Script(script, args);
-        }
+        public List<IFinder> Finders { get; private set; }
 
         /// <summary>
         /// Repeatedly executes <paramref name="func"/> until it returns <c>true</c> or until <see cref="Timeout"/> expires.
@@ -116,7 +103,7 @@ namespace Nito.BrowserBoss
         {
             try
             {
-                return Retry(() => Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(x)).ToArray());
+                return Retry(() => Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(this, x)).ToArray());
             }
             catch (WebDriverTimeoutException ex)
             {
