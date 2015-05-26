@@ -80,7 +80,7 @@ namespace Nito.BrowserBoss
                 else
                     sb.Append(ch);
             }
-            return sb.ToString();
+            return "\"" + sb + "\"";
         }
     }
 }
