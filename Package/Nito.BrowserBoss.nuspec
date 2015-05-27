@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Nito.BrowserBoss</id>
+    <version>1.0.0</version>
+    <title>BrowserBoss</title>
+    <authors>Stephen Cleary</authors>
+    <owners>Stephen Cleary</owners>
+    <licenseUrl>https://raw.githubusercontent.com/StephenCleary/BrowserBoss/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/StephenCleary/BrowserBoss</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Browser automation toolkit.</description>
+    <releaseNotes></releaseNotes>
+    <tags>browser automation linqpad-samples</tags>
+    <dependencies>
+      <dependency id="SizSelCsZzz" version="0.3.36.0" />
+    </dependencies>
+  </metadata>
+</package>

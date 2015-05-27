@@ -93,7 +93,9 @@ namespace Nito.BrowserBoss
             _session.Logger.WriteLine("Writing " + text + " to " + this);
             if (WebElement.TagName != "select")
             {
-                Clear();
+                if (WebElement.GetAttribute("readonly") == "true")
+                    throw new InvalidOperationException("Cannot write to a readonly element.");
+                WebElement.Clear();
                 WebElement.SendKeys(text);
                 return;
             }
