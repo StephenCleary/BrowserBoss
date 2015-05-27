@@ -13,12 +13,12 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// The current global session. This is <c>null</c> until one of the <c>Start</c> methods is called.
         /// </summary>
-        private static Session _session;
+        public static Session Session { get; set; }
 
         /// <summary>
         /// The current browser.
         /// </summary>
-        public static Browser Browser { get { return _session.Browser; } }
+        public static Browser Browser { get { return Session.Browser; } }
 
         /// <summary>
         /// Gets the current URL or navigates to a new URL.
@@ -34,7 +34,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static void StartChrome()
         {
-            _session = new Session(Browser.StartChrome());
+            Session = new Session(Browser.StartChrome());
         }
 
         /// <summary>
@@ -43,7 +43,16 @@ namespace Nito.BrowserBoss
         /// <returns></returns>
         public static void StartInternetExplorer()
         {
-            _session = new Session(Browser.StartInternetExplorer());
+            Session = new Session(Browser.StartInternetExplorer());
+        }
+
+        /// <summary>
+        /// Starts the Firefox driver as <see cref="Browser"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static void StartFirefox()
+        {
+            Session = new Session(Browser.StartFirefox());
         }
 
         /// <summary>
@@ -62,7 +71,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static IReadOnlyCollection<Element> FindElements(string searchText)
         {
-            return _session.FindElements(searchText);
+            return Session.FindElements(searchText);
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static Element Find(string searchText)
         {
-            return _session.Find(searchText);
+            return Session.Find(searchText);
         }
 
         /// <summary>
@@ -81,7 +90,7 @@ namespace Nito.BrowserBoss
         /// <param name="text">The text to send.</param>
         public static void Write(string searchText, string text)
         {
-            _session.Write(searchText, text);
+            Session.Write(searchText, text);
         }
 
         /// <summary>
@@ -90,7 +99,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Clear(string searchText)
         {
-            _session.Clear(searchText);
+            Session.Clear(searchText);
         }
 
         /// <summary>
@@ -99,7 +108,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Click(string searchText)
         {
-            _session.Click(searchText);
+            Session.Click(searchText);
         }
 
         /// <summary>
@@ -108,7 +117,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void DoubleClick(string searchText)
         {
-            _session.DoubleClick(searchText);
+            Session.DoubleClick(searchText);
         }
 
         /// <summary>
@@ -117,7 +126,7 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Check(string searchText)
         {
-            _session.Check(searchText);
+            Session.Check(searchText);
         }
 
         /// <summary>
@@ -126,7 +135,17 @@ namespace Nito.BrowserBoss
         /// <param name="searchText">The search string.</param>
         public static void Uncheck(string searchText)
         {
-            _session.Uncheck(searchText);
+            Session.Uncheck(searchText);
+        }
+
+        /// <summary>
+        /// Drags the matching element onto another matching element. Throws an exception if either search text doesn't match exactly one element each.
+        /// </summary>
+        /// <param name="sourceSearchText">The search string for the element to drag.</param>
+        /// <param name="targetSearchText">The search string for the drag target.</param>
+        public static void DragDrop(string sourceSearchText, string targetSearchText)
+        {
+            Session.DragDrop(sourceSearchText, targetSearchText);
         }
 
         /// <summary>
@@ -157,8 +176,8 @@ namespace Nito.BrowserBoss
             /// </summary>
             public static ILogger Logger
             {
-                get { return _session.Logger; }
-                set { _session.Logger = value; }
+                get { return Session.Logger; }
+                set { Session.Logger = value; }
             }
 
             /// <summary>
@@ -166,14 +185,14 @@ namespace Nito.BrowserBoss
             /// </summary>
             public static TimeSpan Timeout
             {
-                get { return _session.Timeout; }
-                set { _session.Timeout = value; }
+                get { return Session.Timeout; }
+                set { Session.Timeout = value; }
             }
 
             /// <summary>
             /// The collection of finders used to evaluate search strings.
             /// </summary>
-            public static List<IFind> Finders { get { return _session.Finders; } }
+            public static List<IFind> Finders { get { return Session.Finders; } }
         }
     }
 }

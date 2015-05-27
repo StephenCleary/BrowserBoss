@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace Nito.BrowserBoss
 {
@@ -38,6 +39,14 @@ namespace Nito.BrowserBoss
         public bool Selected { get { return WebElement.Selected; } }
 
         /// <summary>
+        /// Returns the parent element.
+        /// </summary>
+        public Element Parent
+        {
+            get { return Find(".."); }
+        }
+
+        /// <summary>
         /// Finds child elements of this element.
         /// </summary>
         /// <param name="searchText">The text to search.</param>
@@ -53,14 +62,6 @@ namespace Nito.BrowserBoss
         public Element Find(string searchText)
         {
             return _session.FindElement(WebElement, searchText);
-        }
-
-        /// <summary>
-        /// Returns the parent element.
-        /// </summary>
-        public Element Parent
-        {
-            get { return Find(".."); }
         }
 
         /// <summary>
@@ -153,7 +154,18 @@ namespace Nito.BrowserBoss
                 WebElement.Click();
         }
 
-        // TODO: drag/drop, other interactions?
+        /// <summary>
+        /// Drags this element onto another element.
+        /// </summary>
+        /// <param name="target">The element to which to drag this one.</param>
+        public void DragDropTo(Element target)
+        {
+            _session.Retry(() =>
+            {
+                new Actions(_session.Browser.WebDriver).DragAndDrop(WebElement, target.WebElement).Perform();
+                return true;
+            });
+        }
 
         /// <summary>
         /// Returns a human-readable interpretation of the element.

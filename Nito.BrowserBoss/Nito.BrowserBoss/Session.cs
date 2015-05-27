@@ -80,7 +80,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         /// <typeparam name="T">The type of elements in the collection returned by <paramref name="func"/>.</typeparam>
         /// <param name="func">The function to execute.</param>
-        public T Retry<T>(Func<T> func) where T : ICollection
+        public T RetrySearch<T>(Func<T> func) where T : ICollection
         {
             var wait = new WebDriverWait(Browser.WebDriver, Timeout);
             var result = default(T);
@@ -108,7 +108,7 @@ namespace Nito.BrowserBoss
         {
             try
             {
-                return Retry(() => Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(this, x)).ToArray());
+                return RetrySearch(() => Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(this, x)).ToArray());
             }
             catch (WebDriverTimeoutException ex)
             {
@@ -200,6 +200,16 @@ namespace Nito.BrowserBoss
         public void Uncheck(string searchText)
         {
             FindElements(searchText).Apply(x => x.Uncheck());
+        }
+
+        /// <summary>
+        /// Drags the matching element onto another matching element. Throws an exception if either search text doesn't match exactly one element each.
+        /// </summary>
+        /// <param name="sourceSearchText">The search string for the element to drag.</param>
+        /// <param name="targetSearchText">The search string for the drag target.</param>
+        public void DragDrop(string sourceSearchText, string targetSearchText)
+        {
+            Find(sourceSearchText).DragDropTo(Find(targetSearchText));
         }
     }
 }

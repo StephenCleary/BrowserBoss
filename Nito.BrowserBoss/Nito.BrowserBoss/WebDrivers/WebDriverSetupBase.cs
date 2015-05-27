@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 
-// TODO: FirefoxWebDriverSetup
-
 namespace Nito.BrowserBoss.WebDrivers
 {
     /// <summary>

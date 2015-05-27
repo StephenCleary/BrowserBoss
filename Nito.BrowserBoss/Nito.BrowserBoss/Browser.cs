@@ -1,6 +1,7 @@
 ﻿using Nito.BrowserBoss.WebDrivers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 
 namespace Nito.BrowserBoss
@@ -49,6 +50,14 @@ namespace Nito.BrowserBoss
         {
             var path = new InternetExplorerWebDriverSetup().Install();
             return new Browser(new InternetExplorerDriver(path));
+        }
+
+        /// <summary>
+        /// Starts the Firefox browser.
+        /// </summary>
+        public static Browser StartFirefox()
+        {
+            return new Browser(new FirefoxDriver());
         }
 
         /// <summary>
