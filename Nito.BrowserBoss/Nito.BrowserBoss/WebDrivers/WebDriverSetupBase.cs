@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using OpenQA.Selenium;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
@@ -33,7 +34,7 @@ namespace Nito.BrowserBoss.WebDrivers
         /// <summary>
         /// Installs/updates the web driver. Checks for updates weekly.
         /// </summary>
-        public string Install()
+        protected string Install()
         {
             // Only check for driver updates every so often.
             if (LatestLocalVersionUpdate() > DateTimeOffset.UtcNow.Subtract(TimeSpan.FromDays(7)))
@@ -90,5 +91,10 @@ namespace Nito.BrowserBoss.WebDrivers
         {
             return !_localVersionFile.Exists ? DateTimeOffset.MinValue : _localVersionFile.LastWriteTimeUtc;
         }
+
+        /// <summary>
+        /// Starts a new instance of the web driver, installing or updating it as necessary.
+        /// </summary>
+        public abstract IWebDriver Start();
     }
 }

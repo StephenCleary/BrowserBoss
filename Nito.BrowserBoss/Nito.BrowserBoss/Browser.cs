@@ -35,12 +35,19 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
+        /// Starts the user's default browser, updating the web driver if necessary.
+        /// </summary>
+        public static Browser StartDefault()
+        {
+            return new Browser(BrowserUtility.GetSetupForDefaultBrowser().Start());
+        }
+
+        /// <summary>
         /// Starts the Chrome browser, updating the web driver if necessary.
         /// </summary>
         public static Browser StartChrome()
         {
-            var path = new ChromeWebDriverSetup().Install();
-            return new Browser(new ChromeDriver(path));
+            return new Browser(new ChromeWebDriverSetup().Start());
         }
 
         /// <summary>
@@ -48,8 +55,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static Browser StartInternetExplorer()
         {
-            var path = new InternetExplorerWebDriverSetup().Install();
-            return new Browser(new InternetExplorerDriver(path));
+            return new Browser(new InternetExplorerWebDriverSetup().Start());
         }
 
         /// <summary>
@@ -57,7 +63,7 @@ namespace Nito.BrowserBoss
         /// </summary>
         public static Browser StartFirefox()
         {
-            return new Browser(new FirefoxDriver());
+            return new Browser(new FirefoxWebDriverSetup().Start());
         }
 
         /// <summary>

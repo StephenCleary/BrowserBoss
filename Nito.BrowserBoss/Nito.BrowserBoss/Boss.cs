@@ -6,14 +6,25 @@ using Nito.BrowserBoss.Loggers;
 namespace Nito.BrowserBoss
 {
     /// <summary>
-    /// Provides a single session to control the browser. Begin by calling one of the <c>Start</c> methods.
+    /// Provides a single session to control the browser.
     /// </summary>
     public static class Boss
     {
+        private static Session _session;
+
         /// <summary>
-        /// The current global session. This is <c>null</c> until one of the <c>Start</c> methods is called.
+        /// The current global session.
         /// </summary>
-        public static Session Session { get; set; }
+        public static Session Session
+        {
+            get
+            {
+                if (_session == null)
+                    _session = new Session(Browser.StartDefault());
+                return _session;
+            }
+            set { _session = value; }
+        }
 
         /// <summary>
         /// The current browser.
@@ -40,7 +51,6 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the IE driver as <see cref="Browser"/>. Installs/updates the Internet Explorer WebDriver as necessary.
         /// </summary>
-        /// <returns></returns>
         public static void StartInternetExplorer()
         {
             Session = new Session(Browser.StartInternetExplorer());
@@ -49,7 +59,6 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the Firefox driver as <see cref="Browser"/>.
         /// </summary>
-        /// <returns></returns>
         public static void StartFirefox()
         {
             Session = new Session(Browser.StartFirefox());

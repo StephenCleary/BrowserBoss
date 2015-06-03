@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using System.Net;
+using OpenQA.Selenium;
+using OpenQA.Selenium.IE;
 
 namespace Nito.BrowserBoss.WebDrivers
 {
@@ -36,6 +38,15 @@ namespace Nito.BrowserBoss.WebDrivers
         {
             // TODO: better implementation
             return "2.45";
+        }
+
+        /// <summary>
+        /// Starts a new instance of the web driver, installing or updating it as necessary.
+        /// </summary>
+        public override IWebDriver Start()
+        {
+            var path = Install();
+            return new InternetExplorerDriver(path);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nito.BrowserBoss.WebDrivers
+﻿using OpenQA.Selenium;
+
+namespace Nito.BrowserBoss.WebDrivers
 {
     /// <summary>
     /// Handles automatic WebDriver installation/updating.
@@ -6,8 +8,8 @@
     public interface IWebDriverSetup
     {
         /// <summary>
-        /// Installs or updates the WebDriver. Returns the directory where the most recent version is.
+        /// Starts a new instance of the web driver, installing or updating it as necessary.
         /// </summary>
-        string Install();
+        IWebDriver Start();
     }
 }
