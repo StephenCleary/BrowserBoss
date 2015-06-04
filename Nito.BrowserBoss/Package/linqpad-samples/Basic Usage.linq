@@ -3,8 +3,6 @@
   <Namespace>Nito.BrowserBoss</Namespace>
 </Query>
 
-Boss.StartChrome();
-
 // This is a sample site designed to be difficult to script.
 Boss.Url = "http://newtours.demoaut.com/";
 

@@ -13,8 +13,6 @@ namespace Example
         {
             try
             {
-                Boss.StartChrome();
-
                 // This is a sample site designed to be difficult to script.
                 Boss.Url = "http://newtours.demoaut.com/";
 
