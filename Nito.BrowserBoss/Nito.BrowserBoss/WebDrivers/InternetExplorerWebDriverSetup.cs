@@ -37,16 +37,19 @@ namespace Nito.BrowserBoss.WebDrivers
         protected override string AvailableVersion()
         {
             // TODO: better implementation
-            return "2.45";
+            return "2.47";
         }
 
         /// <summary>
         /// Starts a new instance of the web driver, installing or updating it as necessary.
         /// </summary>
-        public override IWebDriver Start()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public override IWebDriver Start(bool hideCommandWindow = true)
         {
             var path = Install();
-            return new InternetExplorerDriver(path);
+            var driverService = InternetExplorerDriverService.CreateDefaultService(path);
+            driverService.HideCommandPromptWindow = hideCommandWindow;
+            return new InternetExplorerDriver(driverService);
         }
     }
 }

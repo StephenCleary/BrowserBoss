@@ -37,33 +37,37 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the user's default browser, updating the web driver if necessary.
         /// </summary>
-        public static Browser StartDefault()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static Browser StartDefault(bool hideCommandWindow = true)
         {
-            return new Browser(BrowserUtility.GetSetupForDefaultBrowser().Start());
+            return new Browser(BrowserUtility.GetSetupForDefaultBrowser().Start(hideCommandWindow));
         }
 
         /// <summary>
         /// Starts the Chrome browser, updating the web driver if necessary.
         /// </summary>
-        public static Browser StartChrome()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static Browser StartChrome(bool hideCommandWindow = true)
         {
-            return new Browser(new ChromeWebDriverSetup().Start());
+            return new Browser(new ChromeWebDriverSetup().Start(hideCommandWindow));
         }
 
         /// <summary>
         /// Starts the Internet Explorer browser, updating the web driver if necessary.
         /// </summary>
-        public static Browser StartInternetExplorer()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static Browser StartInternetExplorer(bool hideCommandWindow = true)
         {
-            return new Browser(new InternetExplorerWebDriverSetup().Start());
+            return new Browser(new InternetExplorerWebDriverSetup().Start(hideCommandWindow));
         }
 
         /// <summary>
         /// Starts the Firefox browser.
         /// </summary>
-        public static Browser StartFirefox()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static Browser StartFirefox(bool hideCommandWindow = true)
         {
-            return new Browser(new FirefoxWebDriverSetup().Start());
+            return new Browser(new FirefoxWebDriverSetup().Start(hideCommandWindow));
         }
 
         /// <summary>

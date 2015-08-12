@@ -43,10 +43,13 @@ namespace Nito.BrowserBoss.WebDrivers
         /// <summary>
         /// Starts a new instance of the web driver, installing or updating it as necessary.
         /// </summary>
-        public override IWebDriver Start()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public override IWebDriver Start(bool hideCommandWindow = true)
         {
             var path = Install();
-            return new ChromeDriver(path);
+            var driverService = ChromeDriverService.CreateDefaultService(path);
+            driverService.HideCommandPromptWindow = hideCommandWindow;
+            return new ChromeDriver(driverService);
         }
     }
 }

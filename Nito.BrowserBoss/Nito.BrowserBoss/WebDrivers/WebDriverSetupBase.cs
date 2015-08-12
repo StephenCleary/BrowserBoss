@@ -95,6 +95,7 @@ namespace Nito.BrowserBoss.WebDrivers
         /// <summary>
         /// Starts a new instance of the web driver, installing or updating it as necessary.
         /// </summary>
-        public abstract IWebDriver Start();
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public abstract IWebDriver Start(bool hideCommandWindow = true);
     }
 }
