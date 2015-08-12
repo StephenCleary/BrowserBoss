@@ -43,25 +43,28 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// Starts the Chrome driver as <see cref="Browser"/>. Installs/updates the Chrome WebDriver as necessary.
         /// </summary>
-        public static void StartChrome()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static void StartChrome(bool hideCommandWindow = true)
         {
-            Session = new Session(Browser.StartChrome());
+            Session = new Session(Browser.StartChrome(hideCommandWindow));
         }
 
         /// <summary>
         /// Starts the IE driver as <see cref="Browser"/>. Installs/updates the Internet Explorer WebDriver as necessary.
         /// </summary>
-        public static void StartInternetExplorer()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static void StartInternetExplorer(bool hideCommandWindow = true)
         {
-            Session = new Session(Browser.StartInternetExplorer());
+            Session = new Session(Browser.StartInternetExplorer(hideCommandWindow));
         }
 
         /// <summary>
         /// Starts the Firefox driver as <see cref="Browser"/>.
         /// </summary>
-        public static void StartFirefox()
+        /// <param name="hideCommandWindow">Whether to hide the Selenium command window.</param>
+        public static void StartFirefox(bool hideCommandWindow = true)
         {
-            Session = new Session(Browser.StartFirefox());
+            Session = new Session(Browser.StartFirefox(hideCommandWindow));
         }
 
         /// <summary>
