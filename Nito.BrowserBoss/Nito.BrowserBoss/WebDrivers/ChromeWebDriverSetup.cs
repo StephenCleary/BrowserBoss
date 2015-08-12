@@ -32,7 +32,7 @@ namespace Nito.BrowserBoss.WebDrivers
         }
 
         /// <summary>
-        /// Returns the newest version available for download. Currently always returns "2.45".
+        /// Returns the newest version available for download.
         /// </summary>
         protected override string AvailableVersion()
         {
