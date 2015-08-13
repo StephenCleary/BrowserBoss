@@ -3,7 +3,7 @@ Easily write scripts for browser automation.
 
 ## Getting Started - Standalone Applications
 
-If you want to use BrowserBoss in a "real" application, just install [the NuGet package](https://www.nuget.org/packages/Nito.BrowserBoss/) into your project and then you can write code like:
+If you want to use BrowserBoss in a "real" application, just install [the Nito.BrowserBoss NuGet package](https://www.nuget.org/packages/Nito.BrowserBoss/) into your project and then you can write code like:
 
 ````cs
 using System;
