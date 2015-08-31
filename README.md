@@ -1,6 +1,29 @@
 # BrowserBoss
 Easily write scripts for browser automation.
 
+## Getting Started - LINQPad
+
+BrowserBoss was specifically designed with LINQPad in mind. If you have LINQPad installed, you can install [the NuGet package](https://www.nuget.org/packages/Nito.BrowserBoss/) into your query. Then you can run code like this:
+
+````cs
+// This is a sample site designed to be difficult to script.
+Boss.Url = "http://newtours.demoaut.com/";
+
+// You can click links by text
+Boss.Click("REGISTER");
+
+// CSS selectors are commonly used
+Boss.Write("#email", "StephenCleary");
+
+// XPath also works fine
+Boss.Write("//input[@type='password']", "password");
+// Note that the last line matched both password inputs, and filled them both in.
+
+Boss.Click("input[name='register']");
+
+Console.WriteLine("Done");
+````
+
 ## Getting Started - Standalone Applications
 
 If you want to use BrowserBoss in a "real" application, just install [the Nito.BrowserBoss NuGet package](https://www.nuget.org/packages/Nito.BrowserBoss/) into your project and then you can write code like:
@@ -45,29 +68,6 @@ namespace Example
 ````
 
 Tip: You may also want to install the [NuGet package Costura.Fody](https://www.nuget.org/packages/Costura.Fody/), which auto-magically embeds your referenced dlls as resources. This makes it easy to write small standalone executables to script common tasks.
-
-## Getting Started - LINQPad
-
-BrowserBoss was specifically designed with LINQPad in mind. If you have LINQPad installed, you can install [the NuGet package](https://www.nuget.org/packages/Nito.BrowserBoss/) into your query. Then you can run code like this:
-
-````cs
-// This is a sample site designed to be difficult to script.
-Boss.Url = "http://newtours.demoaut.com/";
-
-// You can click links by text
-Boss.Click("REGISTER");
-
-// CSS selectors are commonly used
-Boss.Write("#email", "StephenCleary");
-
-// XPath also works fine
-Boss.Write("//input[@type='password']", "password");
-// Note that the last line matched both password inputs, and filled them both in.
-
-Boss.Click("input[name='register']");
-
-Console.WriteLine("Done");
-````
 
 ## How It Works: Core Concepts
 
