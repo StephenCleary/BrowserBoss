@@ -81,7 +81,7 @@ namespace Nito.BrowserBoss.WebDrivers
         /// </summary>
         private string LocalVersion()
         {
-            return !_localVersionFile.Exists ? null : File.ReadAllText(_localVersionFile.FullName);
+            return !_localVersionFile.Exists ? null : System.Text.RegularExpressions.Regex.Replace(File.ReadAllText(_localVersionFile.FullName), @"\s", "");
         }
 
         /// <summary>

@@ -32,12 +32,15 @@ namespace Nito.BrowserBoss.WebDrivers
         }
 
         /// <summary>
-        /// Returns the newest version available for download. Currently always returns "2.45".
+        /// Returns the newest version available for download.
         /// </summary>
         protected override string AvailableVersion()
         {
             using (var client = new WebClient())
-                return client.DownloadString("http://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            {
+                var versionString = client.DownloadString("http://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+                return System.Text.RegularExpressions.Regex.Replace(versionString, @"\s", "");
+            }
         }
 
         /// <summary>
