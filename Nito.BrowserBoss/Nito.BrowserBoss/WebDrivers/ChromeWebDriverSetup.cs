@@ -37,7 +37,10 @@ namespace Nito.BrowserBoss.WebDrivers
         protected override string AvailableVersion()
         {
             using (var client = new WebClient())
-                return client.DownloadString("http://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            {
+                var versionString = client.DownloadString("http://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+                return System.Text.RegularExpressions.Regex.Replace(versionString, @"\s", "");
+            }
         }
 
         /// <summary>
