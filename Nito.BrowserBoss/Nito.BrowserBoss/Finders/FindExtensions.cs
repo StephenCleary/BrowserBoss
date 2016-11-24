@@ -72,6 +72,7 @@ namespace Nito.BrowserBoss.Finders
                 result = TryFindCore(@this, webDriver, html, searchText);
                 if (result.Count != 0)
                     return result;
+                webDriver.SwitchTo().ParentFrame();
             }
 
             return result;
