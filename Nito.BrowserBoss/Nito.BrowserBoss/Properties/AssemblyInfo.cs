@@ -5,6 +5,6 @@
 [assembly: AssemblyCompany("Stephen Cleary")]
 [assembly: AssemblyProduct("Nito.BrowserBoss")]
 
-[assembly: AssemblyInformationalVersion("2.0.2")]
-[assembly: AssemblyVersion("2.0.2")]
-[assembly: AssemblyFileVersion("2.0.2")]
+[assembly: AssemblyInformationalVersion("2.0.3")]
+[assembly: AssemblyVersion("2.0.3")]
+[assembly: AssemblyFileVersion("2.0.3")]
