@@ -55,6 +55,11 @@ namespace Nito.BrowserBoss.Finders
         {
             // First, return all the normal matches.
             webDriver.SwitchTo().DefaultContent();
+            return TryFindCore(@this, webDriver, context, searchText);
+        }
+
+        static IReadOnlyCollection<IWebElement> TryFindCore(IReadOnlyCollection<IFind> @this, IWebDriver webDriver, ISearchContext context, string searchText)
+        {
             var result = @this.TryFind(context, searchText);
             if (result.Count != 0)
                 return result;
@@ -64,7 +69,7 @@ namespace Nito.BrowserBoss.Finders
             {
                 webDriver.SwitchTo().Frame(iframe);
                 var html = webDriver.FindElement(By.TagName("html"));
-                result = @this.TryFind(webDriver, html, searchText);
+                result = TryFindCore(@this, webDriver, html, searchText);
                 if (result.Count != 0)
                     return result;
             }
