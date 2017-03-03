@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Nito.BrowserBoss.Finders;
 using Nito.BrowserBoss.Loggers;
@@ -75,6 +75,23 @@ namespace Nito.BrowserBoss
         public static dynamic Script(string script, params object[] args)
         {
             return Browser.Script(script, args);
+        }
+
+        /// <summary>
+        /// Executes asynchronous JavaScript in this browser.
+        /// </summary>
+        /// <param name="script">The JavaScript to execute.</param>
+        /// <param name="args">The arguments to pass to <paramref name="script"/>.</param>
+        /// <remarks>
+        /// The script is executed asynchronous in the browser but this method
+        /// remains synchronous. The JavaScript supplied in <paramref name="script"/>
+        /// receives an extra argument that is a callback function that must be
+        /// invoked to signal the end of script execution. The function accepts
+        /// an argument that then becomes the return value of this method.
+        /// </remarks>
+        public static dynamic AsyncScript(string script, params object[] args)
+        {
+            return Browser.AsyncScript(script, args);
         }
 
         /// <summary>

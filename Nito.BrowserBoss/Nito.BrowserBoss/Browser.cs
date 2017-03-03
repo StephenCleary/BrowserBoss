@@ -1,4 +1,5 @@
-﻿using Nito.BrowserBoss.WebDrivers;
+using System;
+using Nito.BrowserBoss.WebDrivers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -78,6 +79,32 @@ namespace Nito.BrowserBoss
         public dynamic Script(string script, params object[] args)
         {
             return ((IJavaScriptExecutor)WebDriver).ExecuteScript(script, args);
+        }
+
+        /// <summary>
+        /// Set the amount of time to wait for asynchronous JavaScript to execute
+        /// via the <see cref="AsyncScript"/>.
+        /// </summary>
+        public TimeSpan ScriptTimeout
+        {
+            set { WebDriver.Manage().Timeouts().SetScriptTimeout(value); }
+        }
+
+        /// <summary>
+        /// Executes asynchronous JavaScript in this browser.
+        /// </summary>
+        /// <param name="script">The JavaScript to execute.</param>
+        /// <param name="args">The arguments to pass to <paramref name="script"/>.</param>
+        /// <remarks>
+        /// The script is executed asynchronous in the browser but this method
+        /// remains synchronous. The JavaScript supplied in <paramref name="script"/>
+        /// receives an extra argument that is a callback function that must be
+        /// invoked to signal the end of script execution. The function accepts
+        /// an argument that then becomes the return value of this method.
+        /// </remarks>
+        public dynamic AsyncScript(string script, params object[] args)
+        {
+            return ((IJavaScriptExecutor)WebDriver).ExecuteAsyncScript(script, args);
         }
     }
 }
