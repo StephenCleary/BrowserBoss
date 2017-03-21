@@ -78,7 +78,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until <see cref="Config.Timeout"/> expires. Throws an exception if no matching elements could be found.
+        /// Finds the elements specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="BrowserBoss.Session.Finders"/> until <see cref="BrowserBoss.Session.Timeout"/> expires. Throws an exception if no matching elements could be found.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static IReadOnlyCollection<Element> FindElements(string searchText)
@@ -87,7 +87,7 @@ namespace Nito.BrowserBoss
         }
 
         /// <summary>
-        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="Config.Finders"/> until <see cref="Config.Timeout"/> expires. Throws an exception if no matching elements could be found.
+        /// Finds a single matching element specified by <paramref name="searchText"/>. Repeatedly searches using the finders defined in <see cref="BrowserBoss.Session.Finders"/> until <see cref="BrowserBoss.Session.Timeout"/> expires. Throws an exception if no matching elements could be found.
         /// </summary>
         /// <param name="searchText">The search string.</param>
         public static Element Find(string searchText)
@@ -176,35 +176,6 @@ namespace Nito.BrowserBoss
         public static string CssString(string value)
         {
             return Utility.CssString(value);
-        }
-
-        /// <summary>
-        /// Configuration for the <see cref="Boss"/> class. These values are not valid until one of the <c>Start</c> methods is called.
-        /// </summary>
-        public static class Config
-        {
-            /// <summary>
-            /// Gets or sets the current logger.
-            /// </summary>
-            public static ILogger Logger
-            {
-                get { return Session.Logger; }
-                set { Session.Logger = value; }
-            }
-
-            /// <summary>
-            /// The amount of time to wait for browser elements to appear. The default is 30 seconds.
-            /// </summary>
-            public static TimeSpan Timeout
-            {
-                get { return Session.Timeout; }
-                set { Session.Timeout = value; }
-            }
-
-            /// <summary>
-            /// The collection of finders used to evaluate search strings.
-            /// </summary>
-            public static List<IFind> Finders { get { return Session.Finders; } }
         }
     }
 }
