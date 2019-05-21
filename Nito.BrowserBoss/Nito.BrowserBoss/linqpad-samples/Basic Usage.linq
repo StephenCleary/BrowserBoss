@@ -1,5 +1,5 @@
 <Query Kind="Statements">
-  <Reference Relative="Nito.BrowserBoss\bin\Release\Nito.BrowserBoss.dll">C:\Work\BrowserBoss\Nito.BrowserBoss\Nito.BrowserBoss\bin\Release\Nito.BrowserBoss.dll</Reference>
+  <NuGetReference>Nito.BrowserBoss</NuGetReference>
   <Namespace>static Nito.BrowserBoss.Boss</Namespace>
 </Query>
 
