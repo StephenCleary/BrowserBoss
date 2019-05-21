@@ -10,7 +10,7 @@ namespace Nito.BrowserBoss.Finders
     {
         IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)
         {
-            return context.FindElements(By.XPath(".//*[text() = " + Utility.XPathString(searchText) + "]"));
+            return context.FindElements(By.XPath(".//*[normalize-space(text()) = normalize-space(" + Utility.XPathString(searchText) + ")]"));
         }
     }
 }
