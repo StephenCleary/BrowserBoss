@@ -13,6 +13,9 @@ namespace Nito.BrowserBoss.Finders
     /// </summary>
     public sealed class FindByJQueryCss : IFind
     {
+        /// <summary>
+        /// The URI used to download jQuery, if jQuery is not already loaded on the page.
+        /// </summary>
         public string JQueryUri { get; set; } = "https://code.jquery.com/jquery-3.4.1.slim.min.js";
 
         IReadOnlyCollection<IWebElement> IFind.Find(ISearchContext context, string searchText)

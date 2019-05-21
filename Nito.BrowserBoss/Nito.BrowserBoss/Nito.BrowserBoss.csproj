@@ -6,7 +6,7 @@
     <VersionPrefix>3.0.0</VersionPrefix>
     <VersionSuffix>pre01</VersionSuffix>
     <Authors>Stephen Cleary</Authors>
-    <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>browser;automation;linqpad-samples</PackageTags>
     <PackageProjectUrl>https://github.com/StephenCleary/BrowserBoss</PackageProjectUrl>
@@ -20,9 +20,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="7.0.1" />
-    <PackageReference Include="Selenium.Support" Version="2.47.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="2.47.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
 
   <ItemGroup>
