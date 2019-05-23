@@ -18,7 +18,7 @@ namespace Nito.BrowserBoss
         /// <summary>
         /// The current logger.
         /// </summary>
-        private ILogger _logger;
+        private ILogger _logger = new NullLogger();
 
         /// <summary>
         /// Creates a session around the specified browser.

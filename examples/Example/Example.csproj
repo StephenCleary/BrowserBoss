@@ -49,8 +49,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nito.BrowserBoss\Nito.BrowserBoss.csproj">
-      <Project>{390150fe-0474-4edc-a878-942658dd9740}</Project>
+    <ProjectReference Include="..\..\src\Nito.BrowserBoss\Nito.BrowserBoss.csproj">
+      <Project>{0733220d-463c-4596-bfa5-93fd5db168b0}</Project>
       <Name>Nito.BrowserBoss</Name>
     </ProjectReference>
   </ItemGroup>
