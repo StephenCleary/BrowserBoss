@@ -4,9 +4,6 @@ configuration: Debug
 environment:	
   COVERALLS_REPO_TOKEN:	KYm0YEBE2t3vOQTiWu9fTZGQndd3WgsMt
 skip_branch_with_pr: true
-build:
-  publish_nuget_symbols: true
-  use_snupkg_format: true
 build_script:
 - ps: ./Build.ps1
 test_script:
