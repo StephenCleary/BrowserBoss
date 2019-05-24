@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace Nito.BrowserBoss.Finders
@@ -18,7 +19,7 @@ namespace Nito.BrowserBoss.Finders
         {
             try
             {
-                return @this.Find(context, searchText);
+                return @this.Find(context, searchText).Where(x => x.Displayed).ToList();
             }
             catch
             {
@@ -88,6 +89,7 @@ namespace Nito.BrowserBoss.Finders
             yield return new FindByValue();
             yield return new FindByLabel();
             yield return new FindByText();
+            yield return new FindByNormalizeSpaceText();
         }
     }
 }

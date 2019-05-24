@@ -107,7 +107,7 @@ namespace Nito.BrowserBoss
         {
             try
             {
-                return RetrySearch(() => Finders.TryFind(Browser.WebDriver, context, searchText).Where(x => x.Displayed).Select(x => new Element(this, x)).ToArray());
+                return RetrySearch(() => Finders.TryFind(Browser.WebDriver, context, searchText).Select(x => new Element(this, x)).ToList());
             }
             catch (WebDriverTimeoutException ex)
             {
