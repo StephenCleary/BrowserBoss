@@ -54,25 +54,25 @@ namespace Nito.BrowserBoss.Finders
         public static IReadOnlyCollection<IWebElement> TryFind(this IReadOnlyCollection<IFind> @this, IWebDriver webDriver, ISearchContext context, string searchText)
         {
             // First, return all the normal matches.
-            webDriver.SwitchTo().DefaultContent();
-            return TryFindCore(@this, webDriver, context, searchText);
-        }
-
-        static IReadOnlyCollection<IWebElement> TryFindCore(IReadOnlyCollection<IFind> @this, IWebDriver webDriver, ISearchContext context, string searchText)
-        {
             var result = @this.TryFind(context, searchText);
             if (result.Count != 0)
                 return result;
 
-            // If more results are required, then search the iframes.
+            // If more results are required, then search child iframes.
             foreach (var iframe in context.FindElements(By.TagName("iframe")))
             {
                 webDriver.SwitchTo().Frame(iframe);
-                var html = webDriver.FindElement(By.TagName("html"));
-                result = TryFindCore(@this, webDriver, html, searchText);
-                if (result.Count != 0)
-                    return result;
-                webDriver.SwitchTo().ParentFrame();
+                try
+                {
+                    var html = webDriver.FindElement(By.TagName("html"));
+                    result = TryFind(@this, webDriver, html, searchText);
+                    if (result.Count != 0)
+                        return result;
+                }
+                finally
+                {
+                    webDriver.SwitchTo().ParentFrame();
+                }
             }
 
             return result;
